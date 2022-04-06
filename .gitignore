@@ -1,0 +1,7 @@
+tmp/
+tags
+*.lcov
+lcov.info
+
+.coverage
+.coverage_covimerage

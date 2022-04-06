@@ -1,0 +1,86 @@
+" vim: set filetype=vader
+
+Before (each test):
+  set nofoldenable
+After (each test):
+
+Given lcov (simple lcov sections):
+  TN:test1
+  SF:src/file1.go
+  DA:18,0
+  DA:19,0
+  DA:20,0
+  DA:21,0
+  DA:22,0
+  DA:23,0
+  DA:27,0
+  DA:28,0
+  DA:29,0
+  DA:30,0
+  end_of_record
+  TN:test2
+  SF:src/file2.go
+  DA:54,0
+  DA:55,0
+  DA:56,0
+  DA:57,0
+  DA:58,0
+  DA:59,0
+  DA:60,0
+  DA:61,0
+  DA:62,0
+  DA:63,0
+  DA:64,0
+  LF:45
+  LH:15
+  end_of_record
+  TN:test3
+  SF:src/file3.go
+  DA:16,0
+  DA:17,0
+  DA:18,0
+  DA:19,0
+  DA:20,0
+  DA:23,0
+  DA:24,0
+  DA:25,0
+  DA:26,0
+  DA:27,0
+  DA:28,0
+  DA:30,0
+  LF:50
+  LH:0
+  end_of_record
+Do (go to top, ]]):
+  gg
+  ]]
+Then (verify correct line):
+  AssertEqual 'SF:src/file1.go', getline('.')
+Do (go to bottom, [[):
+  G
+  [[
+Then (verify correct line):
+  AssertEqual 'SF:src/file3.go', getline('.')
+Do (go to bottom, 2[[):
+  G
+  2[[
+Then (verify correct line):
+  AssertEqual 'SF:src/file2.go', getline('.')
+Do (go to file2.go, ][):
+  /file2\.go\<cr>
+  ][
+Then (verify correct line):
+  AssertEqual 'end_of_record', getline('.')
+  AssertEqual 'TN:test3', getline(line('.')+1)
+Do (go to file2.go, []):
+  /file2\.go\<cr>
+  []
+Then (verify correct line):
+  AssertEqual 'end_of_record', getline('.')
+  AssertEqual 'TN:test2', getline(line('.')+1)
+Do (go to bottom, []):
+  G
+  []
+Then (verify correct line):
+  AssertEqual 'end_of_record', getline('.')
+  AssertEqual 'TN:test3', getline(line('.')+1)

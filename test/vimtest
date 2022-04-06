@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+THIS_DIR="$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
+
+vim -N -U NONE -u "$THIS_DIR/vader.vimrc" "$1"

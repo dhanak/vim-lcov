@@ -1,0 +1,17 @@
+" vim: set filetype=vader
+
+Before (each test):
+After (each test):
+
+Given (nothing):
+Do (edit a file named 'lcov.info'):
+  :ed lcov.info\<CR>
+Then (verify filetype 'lcov'):
+  AssertEqual 'lcov', &filetype
+
+Given (nothing):
+Do (edit a file named 'coverage.lcov'):
+  :ed coverage.lcov\<CR>
+Then (verify filetype 'lcov'):
+  AssertEqual 'lcov', &filetype
+

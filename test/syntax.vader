@@ -1,0 +1,128 @@
+" vim: set filetype=vader
+
+Before (each test):
+  set nofoldenable
+After (each test):
+
+Given lcov (simple lcov sections):
+  TN:TestName
+  SF:src/lib/ext/mac_reminders.rs
+  FN:10,quicknotes::ext::mac_reminders::testrun
+  FN:10,quicknotes::ext::mac_reminders::testrun
+  FN:4,quicknotes::ext::mac_reminders::_::<impl serde::ser::Serialize for quicknotes::ext::mac_reminders::RemindersTaskParams>::serialize
+  FN:4,<quicknotes::ext::mac_reminders::RemindersTaskParams as serde::ser::Serialize>::serialize::<&mut serde_json::ser::Serializer<&mut alloc::vec::Vec<u8>>>
+  FN:4,quicknotes::ext::mac_reminders::_::<impl serde::ser::Serialize for quicknotes::ext::mac_reminders::RemindersTaskParams>::serialize
+  FN:4,<quicknotes::ext::mac_reminders::RemindersTaskParams as serde::ser::Serialize>::serialize::<_>
+  FN:10,quicknotes::ext::mac_reminders::testrun
+  FNDA:0,quicknotes::ext::mac_reminders::testrun
+  FNDA:0,quicknotes::ext::mac_reminders::testrun
+  FNDA:0,quicknotes::ext::mac_reminders::_::<impl serde::ser::Serialize for quicknotes::ext::mac_reminders::RemindersTaskParams>::serialize
+  FNDA:0,<quicknotes::ext::mac_reminders::RemindersTaskParams as serde::ser::Serialize>::serialize::<&mut serde_json::ser::Serializer<&mut alloc::vec::Vec<u8>>>
+  FNDA:0,quicknotes::ext::mac_reminders::_::<impl serde::ser::Serialize for quicknotes::ext::mac_reminders::RemindersTaskParams>::serialize
+  FNDA:0,<quicknotes::ext::mac_reminders::RemindersTaskParams as serde::ser::Serialize>::serialize::<_>
+  FNDA:0,quicknotes::ext::mac_reminders::testrun
+  FNF:7
+  FNH:0
+  BRDA:4,0,0,-
+  BRDA:4,0,1,-
+  BRDA:4,0,2,-
+  BRDA:4,0,3,-
+  BRDA:4,0,4,-
+  BRDA:4,0,5,-
+  BRDA:4,0,6,-
+  BRDA:4,0,7,-
+  BRDA:4,0,8,-
+  BRDA:27,0,0,-
+  BRDA:27,0,1,-
+  BRDA:27,0,2,-
+  BRDA:27,0,3,-
+  BRF:13
+  BRH:0
+  DA:1,0
+  DA:4,0
+  DA:10,0
+  DA:11,0
+  DA:12,0
+  DA:13,0
+  DA:14,0
+  DA:15,0
+  DA:16,0
+  DA:17,0
+  DA:18,0
+  DA:19,0
+  DA:20,0
+  DA:21,0
+  DA:22,0
+  DA:23,0
+  DA:24,0
+  DA:25,0
+  DA:26,0
+  DA:27,0
+  DA:32,0
+  LF:21
+  LH:0
+  end_of_record
+Do (go to bottom, move inside the line):
+  G
+  ll
+Then (verify syntax of 'end_of_record'):
+  AssertEqual 'lcovSectionEnd', SyntaxAt(line('.'), col('.'))
+Do (go to SF):
+  G
+  /SF\:\<CR>
+Then (verify syntax of 'SF'):
+  AssertEqual 'lcovSF', SyntaxAt(line('.'), col('.'))
+Do (go to SF, move to column(:)):
+  G
+  /SF\:\<CR>
+  f:
+Then (verify syntax of column):
+  AssertEqual 'lcovColumn', SyntaxAt(line('.'), col('.'))
+Do (go to SF, move to source file path):
+  G
+  /SF\:\<CR>
+  4l
+Then (verify syntax of source file):
+  AssertEqual 'lcovSourceFile', SyntaxAt(line('.'), col('.'))
+
+Do (go to FN):
+  gg
+  /^FN\:\<CR>
+Then (verify syntax of 'DA' line):
+  AssertEqual 'lcovFN', SyntaxAt(line('.'), col('.'))
+  AssertEqual 'lcovColumn', SyntaxAt(line('.'), col('.')+2)
+
+Do (go to FN, and jump to ','):
+  gg
+  /^FN\:\<CR>
+  f,
+  l
+Then ():
+  AssertEqual 'lcovFunction', SyntaxAt(line('.'), col('.'))
+  AssertEqual 'lcovFunction', SyntaxAt(line('.'), col('$')-1)
+
+Do (go to FNDA, and jump to ','):
+  gg
+  /^FNDA\:\<CR>
+  f,
+  l
+Then ():
+  AssertEqual 'lcovFunction', SyntaxAt(line('.'), col('.'))
+  AssertEqual 'lcovFunction', SyntaxAt(line('.'), col('$')-1)
+
+Do (go to DA):
+  gg
+  /^DA\:\<CR>
+Then (verify syntax of 'DA' line):
+  AssertEqual 'lcovDA', SyntaxAt(line('.'), col('.'))
+  AssertEqual 'lcovColumn', SyntaxAt(line('.'), col('.')+2)
+  AssertEqual 'lcovNumber', SyntaxAt(line('.'), col('.')+3)
+
+Do (go to BRDA):
+  gg
+  /^BRDA\:\<CR>
+Then (verify syntax of 'BRDA' line):
+  AssertEqual 'lcovBRDA',   SyntaxAt(line('.'), col('.'))
+  AssertEqual 'lcovColumn', SyntaxAt(line('.'), col('.')+4)
+  AssertEqual 'lcovNumber', SyntaxAt(line('.'), col('.')+5)
+  AssertEqual 'lcovTaken',  SyntaxAt(line('.'), col('$')-1)
